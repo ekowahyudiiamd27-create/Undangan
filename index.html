@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dinda & Rafi - Undangan Pernikahan</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #fffaf7;
+      color: #333;
+      text-align: center;
+      scroll-behavior: smooth;
+    }
+
+    header {
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                  url('foto-header.jpg') center/cover no-repeat;
+      color: white;
+      padding: 120px 20px;
+    }
+
+    header h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3em;
+      margin: 0;
+    }
+
+    header p {
+      font-size: 1.2em;
+      margin-top: 10px;
+    }
+
+    section {
+      padding: 50px 20px;
+    }
+
+    .foto-pengantin {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid #f7d9c4;
+      margin-top: 20px;
+    }
+
+    .countdown {
+      font-size: 1.5em;
+      color: #b85c38;
+      margin-top: 20px;
+    }
+
+    .galeri {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+
+    .galeri img {
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .galeri img:hover {
+      transform: scale(1.05);
+    }
+
+    .btn {
+      background-color: #b85c38;
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-size: 1em;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #a14e2f;
+    }
+
+    footer {
+      background-color: #f7d9c4;
+      padding: 20px;
+      font-size: 0.9em;
+    }
+
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #b85c38;
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      font-size: 24px;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Asri & Umam</h1>
+    <p>Kami akan memulai kisah baru dalam hidup kami</p>
+  </header>
+
+  <section id="acara">
+    <img src="foto-pengantin.jpg" alt="Foto Pengantin" class="foto-pengantin" />
+
+    <h2>Undangan Pernikahan</h2>
+    <p>Dengan penuh rasa syukur, kami mengundang Anda untuk hadir dalam acara pernikahan kami:</p>
+
+    <div class="tanggal">Rabu, 29 Oktober 2025<br> Pukul 12.00 WIB</div>
+
+    <div class="lokasi">
+      Aula Cinta Abadi<br>
+      Jl. Cisarua No. 25, Bogor
+    </div>
+
+    <div class="countdown" id="countdown"></div>
+
+    <button class="btn" onclick="shareLokasi()">📍 Lihat & Share Lokasi</button>
+  </section>
+
+  <section id="galeri">
+    <h2>Galeri Kami</h2>
+    <div class="galeri">
+      <img src="foto1.jpg" alt="Foto 1">
+      <img src="foto2.jpg" alt="Foto 2">
+      <img src="foto3.jpg" alt="Foto 3">
+      <img src="foto4.jpg" alt="Foto 4">
+    </div>
+  </section>
+
+  <footer>
+    <p>Terima kasih atas doa dan restu Anda 💕</p>
+  </footer>
+
+  <audio id="bgm" loop>
+    <source src="lagu.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="music-btn" onclick="toggleMusic()">🎵</button>
+
+  <script>
+    // === Hitung Mundur ===
+    const countdown = document.getElementById("countdown");
+    const targetDate = new Date("Oct 29, 2025 12:00:00").getTime();
+
+    setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      if (distance > 0) {
+        countdown.innerHTML = `${days} Hari ${hours} Jam ${minutes} Menit ${seconds} Detik lagi 💍`;
+      } else {
+        countdown.innerHTML = "Acara sedang berlangsung 🎉";
+      }
+    }, 1000);
+
+    // === Share Lokasi ===
+    function shareLokasi() {
+      const linkMaps = "https://www.google.com/maps?q=-6.704203,106.943846"; // Ganti koordinat lokasi
+      window.open(linkMaps, "_blank");
+    }
+
+    // === Musik Latar ===
+    const music = document.getElementById("bgm");
+    let isPlaying = false;
+    function toggleMusic() {
+      if (isPlaying) {
+        music.pause();
+      } else {
+        music.play();
+      }
+      isPlaying = !isPlaying;
+    }
+  </script>
+
+</body>
+</html>
